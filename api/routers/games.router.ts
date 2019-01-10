@@ -5,8 +5,8 @@ import { gamesController } from '../controllers/games.controller';
 
 class GamesRouter extends Router {
     apply(application: express.Application) {
-        application.get('/hello/:id', gamesController.findAll())
-        application.post('/hello', gamesController.create())
+        application.get('/games', gamesController.findAll())
+        application.post('/games', gamesController.create())
     }
 }
 

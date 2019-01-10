@@ -6,7 +6,7 @@ const server = new Server()
 server.bootstrap([
     gamesRouter
 ]).then(server => {
-    console.log('Server run', environment.server.port)
+    console.log(server.address())
 }).catch(err => {
-    console.log('Error run server', err)
+    console.log('Error server', err)
 })

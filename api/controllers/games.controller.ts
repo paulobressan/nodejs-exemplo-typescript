@@ -1,10 +1,14 @@
 import * as express from 'express'
 import { BaseController } from '../../config/base-controller';
+import { gamesService } from '../services/games.service';
 
 class GamesController extends BaseController {
     findAll(): express.RequestHandler {
         return (req: express.Request, resp: express.Response, next: express.NextFunction) => {
-            this.render(resp, next)({ msg: req.params.id })
+            gamesService
+                .findAll(req.query.page, req.url)
+                .then(this.render(resp, next))
+                .catch(next)
         }
     }
 

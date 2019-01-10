@@ -2,8 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const environment_1 = require("../config/environment");
 class Server {
+    initDataBase() {
+        mongoose.Promise = global.Promise;
+        const options = {
+            useNewUrlParser: true,
+            useCreateIndex: true,
+            useFindAndModify: false
+        };
+        return mongoose.connect(environment_1.environment.db.url, options);
+    }
     initRouters(routes) {
         return new Promise((resolve, reject) => {
             try {
@@ -22,14 +32,13 @@ class Server {
             }
         });
     }
-    setAddress() {
-        return new Promise(resolve => {
-            this.application.address = '';
-        });
+    address() {
+        return `Express server listening on port ${environment_1.environment.server.port}`;
     }
     bootstrap(routes = []) {
-        return this.initRouters(routes)
-            .then(() => this);
+        return this.initDataBase()
+            .then(() => this.initRouters(routes)
+            .then(() => this));
     }
 }
 exports.Server = Server;
