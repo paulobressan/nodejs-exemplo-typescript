@@ -1,6 +1,9 @@
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as mongoose from 'mongoose'
+import * as swaggerUi from 'swagger-ui-express'
+import * as swaggerJson from './swagger.json'
+import * as fs from 'fs'
 
 import { Router } from '../config/router';
 import { environment } from '../config/environment';
@@ -31,7 +34,10 @@ export class Server {
                 for (let route of routes) {
                     route.apply(this.application)
                 }
-
+                
+                //Middleware swagger
+                this.application.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJson))
+                
                 this.application.listen(environment.server.port, () => {
                     resolve(this.application)
                 })

@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const swaggerUi = require("swagger-ui-express");
+const swaggerJson = require("./swagger.json");
 const environment_1 = require("../config/environment");
 class Server {
     initDataBase() {
@@ -23,6 +25,8 @@ class Server {
                 for (let route of routes) {
                     route.apply(this.application);
                 }
+                //Middleware swagger
+                this.application.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJson));
                 this.application.listen(environment_1.environment.server.port, () => {
                     resolve(this.application);
                 });

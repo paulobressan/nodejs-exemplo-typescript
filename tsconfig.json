@@ -3,6 +3,8 @@
     "target": "es6",
     "module": "commonjs",
     "outDir": "dist",
-    "sourceMap": true
+    "sourceMap": true,
+    //importação de arquivo json
+    "resolveJsonModule": true
   }
 }
